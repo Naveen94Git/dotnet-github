@@ -5,6 +5,7 @@
     <RootNamespace>DotnetDemoapp</RootNamespace>
     <ImplicitUsings>enable</ImplicitUsings>
     <IsPackable>true</IsPackable>
+    <NoWarn>NU5105</NoWarn>
 
     <Version>1.5.0</Version>
   </PropertyGroup>
