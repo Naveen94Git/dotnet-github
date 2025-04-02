@@ -52,7 +52,7 @@ jobs:
 
     - name: Build Docker Image
       run: |
-        docker built -t ${{ secrets.ECR_REGISTRY }}/dotnet-demoapp:${{ github.sha }} .
+        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
         working-directory: ./src
 
     - name: Login to Amazon ECR
