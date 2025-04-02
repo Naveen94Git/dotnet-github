@@ -65,7 +65,7 @@ jobs:
       run: |
         # Build a docker container and push it to ECR 
         docker build -f ./build/Dockerfile -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
-        working-directory: .
+        # working-directory: .
         echo "Pushing image to ECR....."
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
         echo "image=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
