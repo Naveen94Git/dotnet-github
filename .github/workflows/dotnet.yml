@@ -32,12 +32,6 @@ jobs:
     - name: Package the application
       run: dotnet pack --configuration Release --output ./nuget-packages ./src/dotnet-demoapp.csproj
 
-    - name: Push NuGet Package (Retry)
-      run: |
-        for i in {1..5}; do
-          dotnet nuget push ./nuget-packages/*.nupkg --source "http://3.111.23.62:8081/repository/nuget-group/" --api-key *** && break || sleep $((2**i))
-        done
-
     - name: Configure NuGet for Nexus
       run: |
         dotnet nuget add source "https://3.111.23.62:8081/repository/nuget-hosted/" \
