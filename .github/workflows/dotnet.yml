@@ -43,3 +43,21 @@ jobs:
     - name: Push NuGet package to Nexus
       run: dotnet nuget push ./nuget-packages/*.nupkg --source "http://3.111.23.62:8081/repository/nuget-hosted/" --api-key ${{ secrets.NEXUS_API_KEY }}
 
+    - name: Build Docker Image
+      run: |
+        docker built -t ${{ secrets.ECR_REGISTRY }}/dotnet-demoapp:${{ github.sha }} .
+        working-directory: ./src
+
+    - name: Login to Amazon ECR
+      id: login-ecr
+      uses: aws-actions/amazon-ecr-login@v1
+      with:
+        region: ${{ secrets.AWS_REGION }}
+
+    - name: Push Docker Image to ECR
+      run: |
+        docker push ${{ secrets.ECR_REGISTRY }}/dotnet-demoapp:${{ github.sha }}
+
+    - name: Cleanup Docker Images
+      run: docker rmi ${{ secrets.ECR_REGISTRY }}/dotnet-demoapp:${{ github.sha }}
+
