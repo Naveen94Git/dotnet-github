@@ -43,6 +43,13 @@ jobs:
     - name: Push NuGet package to Nexus
       run: dotnet nuget push ./nuget-packages/*.nupkg --source "http://3.111.23.62:8081/repository/nuget-hosted/" --api-key ${{ secrets.NEXUS_API_KEY }}
 
+    - name: Configure AWS Credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: ${{ secrets.AWS_REGION }}
+
     - name: Build Docker Image
       run: |
         docker built -t ${{ secrets.ECR_REGISTRY }}/dotnet-demoapp:${{ github.sha }} .
@@ -59,5 +66,6 @@ jobs:
         docker push ${{ secrets.ECR_REGISTRY }}/dotnet-demoapp:${{ github.sha }}
 
     - name: Cleanup Docker Images
-      run: docker rmi ${{ secrets.ECR_REGISTRY }}/dotnet-demoapp:${{ github.sha }}
+      run: |
+        docker rmi ${{ secrets.ECR_REGISTRY }}/dotnet-demoapp:${{ github.sha }}
 
