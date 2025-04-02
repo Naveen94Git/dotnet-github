@@ -70,7 +70,6 @@ jobs:
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
         echo "image=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
 
-    - name: Cleanup Docker Images
-      run: |
-        docker rmi ${{ secrets.ECR_REGISTRY }}/dotnet-demoapp:${{ github.sha }}
-
+#    - name: Cleanup Docker Images
+#      run: |
+#        docker rmi ${{ secrets.ECR_REGISTRY }}/dotnet-demoapp:${{ github.sha }}
